@@ -28,7 +28,7 @@ if [[ $# -eq 2 ]]; then
   is_natural_number $1 $2
   calculate_gcd $1 $2
 else
-  exho '引数は2つ指定してください'
+  echo '引数は2つ指定してください'
   exit 1
 fi
 
