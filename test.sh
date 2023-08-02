@@ -1,80 +1,266 @@
 SUCCESS_GREEN='\033[0;32m'
-ERROR_RED='\033[0;31m'
+FAILURE_RED='\033[0;31m'
 NC='\033[0m'
 
 success_message="${SUCCESS_GREEN}成功${NC}"
-error_message="${ERROR_RED}エラー${NC}"
+failure_message="${FAILURE_RED}失敗${NC}"
 
-total_count=7
 passed_count=0
 
-# 正しくパスすること
-test_case=$(./gcd.sh 2 4)
+#
+# 正しく計算できる
+#
+test_case_title=正しく計算できる
+
+# 1桁
+test_case_subtitle='1桁'
 expectation=2
-if [[ $test_case -eq $expectation ]]; then
-  echo -e $success_message
+./gcd.sh 2 4 > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) -eq $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
   exit 1
 fi
 
-test_case=$(./gcd.sh 30 12)
+# 2桁
+test_case_subtitle='2桁'
 expectation=6
-if [[ $test_case -eq $expectation ]]; then
-  echo -e $success_message
+./gcd.sh 30 12 > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) -eq $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
   exit 1
 fi
 
-# 引数の数エラーが返ること
-./gcd.sh 3 | grep "引数は2つ指定してください"
-if [[ $? -eq 0 ]]; then
-  echo -e $success_message
+# 3桁
+test_case_subtitle='3桁'
+expectation=4
+./gcd.sh 312 532 > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) -eq $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
   exit 1
 fi
 
-./gcd.sh 38 5 10 | grep "引数は2つ指定してください"
-if [[ $? -eq 0 ]]; then
-  echo -e $success_message
+#
+# 引数の個数エラーが返る
+#
+test_case_title=引数の個数エラーが返る
+
+# 引数なし
+test_case_subtitle='引数なし'
+expectation='引数は2つ指定してください'
+./gcd.sh | grep '引数は2つ指定してください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
   exit 1
 fi
 
-# 自然数エラーが返ること
-./gcd.sh -67 2 | grep "引数は自然数としてください"
-if [[ $? -eq 0 ]]; then
-  echo -e $success_message
+# 引数1つ
+test_case_subtitle='引数1つ'
+expectation='引数は2つ指定してください'
+./gcd.sh 3 | grep '引数は2つ指定してください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
   exit 1
 fi
 
-./gcd.sh 112.5 84 | grep "引数は自然数としてください"
-if [[ $? -eq 0 ]]; then
-  echo -e $success_message
+# 引数3つ
+test_case_subtitle='引数3つ'
+expectation='引数は2つ指定してください'
+./gcd.sh 38 5 10 | grep '引数は2つ指定してください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
   exit 1
 fi
 
-./gcd.sh 阿 🐍 | grep "引数は自然数としてください"
-if [[ $? -eq 0 ]]; then
-  echo -e $success_message
+#
+# 自然数エラーが返る
+#
+test_case_title=自然数エラーが返る
+
+# 負の数(第1引数)
+test_case_subtitle='負の数(第1引数)'
+expectation='引数は自然数としてください'
+./gcd.sh -67 4 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
   exit 1
 fi
 
-echo $passed_count/$total_count 個のテストが成功しました
+# 小数(第1引数)
+test_case_subtitle='小数(第1引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 112.5 84 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
 
+# 漢字(第1引数)
+test_case_subtitle='漢字(第1引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 阿 2 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# 絵文字(第1引数)
+test_case_subtitle='絵文字(第1引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 蛇 91 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# ひらがな(第1引数)
+test_case_subtitle='ひらがな(第1引数)'
+expectation='引数は自然数としてください'
+./gcd.sh ら 29 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# アルファベット(第1引数)
+test_case_subtitle='アルファベット(第1引数)'
+expectation='引数は自然数としてください'
+./gcd.sh a 41 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# 記号(第1引数)
+test_case_subtitle='記号(第1引数)'
+expectation='引数は自然数としてください'
+./gcd.sh . 99 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# 負の数(第2引数)
+test_case_subtitle='負の数(第2引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 4 -67 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# 小数(第2引数)
+test_case_subtitle='小数(第2引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 84 112.5 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# 漢字(第2引数)
+test_case_subtitle='漢字(第2引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 2 阿 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# 絵文字(第2引数)
+test_case_subtitle='絵文字(第2引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 91 蛇 | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# ひらがな(第2引数)
+test_case_subtitle='ひらがな(第2引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 29 ら | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# アルファベット(第2引数)
+test_case_subtitle='アルファベット(第2引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 41 a | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# 記号(第2引数)
+test_case_subtitle='記号(第2引数)'
+expectation='引数は自然数としてください'
+./gcd.sh 99 . | grep '引数は自然数としてください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+
+echo $passed_count 個すべてのテストが成功しました

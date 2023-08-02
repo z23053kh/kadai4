@@ -31,4 +31,3 @@ else
   echo '引数は2つ指定してください'
   exit 1
 fi
-
