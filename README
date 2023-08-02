@@ -4,5 +4,4 @@
 - gcd.sh ... 最大公約数を計算するシェルスクリプト
 - test.sh ... gcd.sh をテストするシェルスクリプト
 
-GitHub Actions の実行結果については PR https://github.com/z23053kh/kadai4/pulls?q=is%3Apr+sort%3Aupdated-desc+is%3Aclosed を参照してください。
-
+GitHub Actions の実行結果については https://github.com/z23053kh/kadai4/actions/workflows/test.yml を参照してください。
