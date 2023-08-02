@@ -28,22 +28,42 @@ else
   exit 1
 fi
 
-# 引数の数エラーが返ること
-./gcd.sh 3 | grep "引数は2つ指定してください"
-if [[ $? -eq 0 ]]; then
-  echo -e $success_message
+# 引数の個数エラーが返る
+test_case_title=引数の個数エラーが返る
+
+# 引数なし
+test_case_subtitle='引数なし'
+expectation='引数は2つ指定してください'
+./gcd.sh | grep '引数は2つ指定してください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $failure_message
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
   exit 1
 fi
 
-./gcd.sh 38 5 10 | grep "引数は2つ指定してください"
-if [[ $? -eq 0 ]]; then
-  echo -e $success_message
+# 引数1つ
+test_case_subtitle='引数1つ'
+expectation='引数は2つ指定してください'
+./gcd.sh 3 | grep '引数は2つ指定してください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $failure_message
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
+  exit 1
+fi
+
+# 引数3つ
+test_case_subtitle='引数3つ'
+expectation='引数は2つ指定してください'
+./gcd.sh 38 5 10 | grep '引数は2つ指定してください' > /tmp/$$-result
+if [[ $(cat /tmp/$$-result) == $expectation ]]; then
+  echo -e "$success_message: $test_case_title > $test_case_subtitle"
+  passed_count=$(expr $passed_count + 1)
+else
+  echo -e "$failure_message: $test_case_title > $test_case_subtitle"
   exit 1
 fi
 
