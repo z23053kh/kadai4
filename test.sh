@@ -7,7 +7,9 @@ failure_message="${FAILURE_RED}失敗${NC}"
 
 passed_count=0
 
+#
 # 正しく計算できる
+#
 test_case_title=正しく計算できる
 
 # 1桁
@@ -46,7 +48,9 @@ else
   exit 1
 fi
 
+#
 # 引数の個数エラーが返る
+#
 test_case_title=引数の個数エラーが返る
 
 # 引数なし
@@ -85,10 +89,12 @@ else
   exit 1
 fi
 
+#
 # 自然数エラーが返る
+#
 test_case_title=自然数エラーが返る
 
-# 負の数
+# 負の数(第1引数)
 test_case_subtitle='負の数(第1引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh -67 4 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -100,7 +106,7 @@ else
   exit 1
 fi
 
-# 小数
+# 小数(第1引数)
 test_case_subtitle='小数(第1引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 112.5 84 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -112,7 +118,7 @@ else
   exit 1
 fi
 
-# 漢字
+# 漢字(第1引数)
 test_case_subtitle='漢字(第1引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 阿 2 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -124,7 +130,7 @@ else
   exit 1
 fi
 
-# 絵文字
+# 絵文字(第1引数)
 test_case_subtitle='絵文字(第1引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 蛇 91 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -136,7 +142,7 @@ else
   exit 1
 fi
 
-# ひらがな
+# ひらがな(第1引数)
 test_case_subtitle='ひらがな(第1引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh ら 29 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -148,7 +154,7 @@ else
   exit 1
 fi
 
-# アルファベット
+# アルファベット(第1引数)
 test_case_subtitle='アルファベット(第1引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh a 41 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -160,7 +166,7 @@ else
   exit 1
 fi
 
-# 記号
+# 記号(第1引数)
 test_case_subtitle='記号(第1引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh . 99 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -172,7 +178,7 @@ else
   exit 1
 fi
 
-# 負の数
+# 負の数(第2引数)
 test_case_subtitle='負の数(第2引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 4 -67 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -184,7 +190,7 @@ else
   exit 1
 fi
 
-# 小数
+# 小数(第2引数)
 test_case_subtitle='小数(第2引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 84 112.5 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -196,7 +202,7 @@ else
   exit 1
 fi
 
-# 漢字
+# 漢字(第2引数)
 test_case_subtitle='漢字(第2引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 2 阿 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -208,7 +214,7 @@ else
   exit 1
 fi
 
-# 絵文字
+# 絵文字(第2引数)
 test_case_subtitle='絵文字(第2引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 91 蛇 | grep '引数は自然数としてください' > /tmp/$$-result
@@ -220,7 +226,7 @@ else
   exit 1
 fi
 
-# ひらがな
+# ひらがな(第2引数)
 test_case_subtitle='ひらがな(第2引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 29 ら | grep '引数は自然数としてください' > /tmp/$$-result
@@ -232,7 +238,7 @@ else
   exit 1
 fi
 
-# アルファベット
+# アルファベット(第2引数)
 test_case_subtitle='アルファベット(第2引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 41 a | grep '引数は自然数としてください' > /tmp/$$-result
@@ -244,7 +250,7 @@ else
   exit 1
 fi
 
-# 記号
+# 記号(第2引数)
 test_case_subtitle='記号(第2引数)'
 expectation='引数は自然数としてください'
 ./gcd.sh 99 . | grep '引数は自然数としてください' > /tmp/$$-result
