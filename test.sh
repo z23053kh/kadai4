@@ -1,9 +1,9 @@
 SUCCESS_GREEN='\033[0;32m'
-ERROR_RED='\033[0;31m'
+FAILURE_RED='\033[0;31m'
 NC='\033[0m'
 
 success_message="${SUCCESS_GREEN}成功${NC}"
-error_message="${ERROR_RED}エラー${NC}"
+failure_message="${FAILURE_RED}失敗${NC}"
 
 total_count=7
 passed_count=0
@@ -15,7 +15,7 @@ if [[ $test_case -eq $expectation ]]; then
   echo -e $success_message
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e $failure_message
   exit 1
 fi
 
@@ -25,7 +25,7 @@ if [[ $test_case -eq $expectation ]]; then
   echo -e $success_message
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e $failure_message
   exit 1
 fi
 
@@ -35,7 +35,7 @@ if [[ $? -eq 0 ]]; then
   echo -e $success_message
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e $failure_message
   exit 1
 fi
 
@@ -44,7 +44,7 @@ if [[ $? -eq 0 ]]; then
   echo -e $success_message
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e $failure_message
   exit 1
 fi
 
@@ -54,7 +54,7 @@ if [[ $? -eq 0 ]]; then
   echo -e $success_message
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e $failure_message
   exit 1
 fi
 
@@ -63,7 +63,7 @@ if [[ $? -eq 0 ]]; then
   echo -e $success_message
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e $failure_message
   exit 1
 fi
 
@@ -72,9 +72,8 @@ if [[ $? -eq 0 ]]; then
   echo -e $success_message
   passed_count=$(expr $passed_count + 1)
 else
-  echo -e $error_message
+  echo -e $failure_message
   exit 1
 fi
 
 echo $passed_count/$total_count 個のテストが成功しました
-
